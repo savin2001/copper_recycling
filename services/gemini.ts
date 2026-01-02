@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { SYSTEM_PROMPT } from "../constants";
-import { AnalysisResult } from "../types";
+import { AnalysisResult, SupplierSearchResult, MapLocation } from "../types";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
@@ -71,5 +71,81 @@ export const analyzeCopper = async (
   } catch (error) {
     console.error("Gemini API Error:", error);
     throw new Error("Failed to analyze image. Please check your connection and try again.");
+  }
+};
+
+export const findSuppliers = async (
+  query: string,
+  userLocation?: { lat: number; lng: number }
+): Promise<SupplierSearchResult> => {
+  try {
+    // We use gemini-2.5-flash for Maps Grounding
+    const model = 'gemini-2.5-flash';
+    
+    let locationContext = "";
+    let toolConfig = undefined;
+
+    if (userLocation) {
+      locationContext = `near the user's location (Lat: ${userLocation.lat}, Lng: ${userLocation.lng})`;
+      toolConfig = {
+        retrievalConfig: {
+          latLng: {
+            latitude: userLocation.lat,
+            longitude: userLocation.lng
+          }
+        }
+      };
+    } else {
+      locationContext = `in ${query}`;
+    }
+
+    const prompt = `
+      Find 5-7 reliable "kabadiwala" (scrap dealers), metal recyclers, or industrial scrap yards ${locationContext}.
+      Focus on businesses that likely buy/sell copper, wires, or metal scrap.
+      
+      For each one found via Google Maps, provide a brief 1-line reason why a small workshop might visit them.
+      Use a helpful, business-like tone.
+    `;
+
+    const response = await ai.models.generateContent({
+      model: model,
+      contents: { role: 'user', parts: [{ text: prompt }] },
+      config: {
+        tools: [{ googleMaps: {} }],
+        toolConfig: toolConfig as any,
+      }
+    });
+
+    const text = response.text || "No suppliers found. Try a different area.";
+    
+    // Extract Map chunks from grounding metadata
+    const locations: MapLocation[] = [];
+    
+    // The structure of groundingChunks for maps usually contains 'maps' object
+    const chunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+
+    for (const chunk of chunks) {
+      if (chunk.maps) {
+        // We look for title and uri. 
+        // The URI is often in 'maps.source.uri' or directly 'maps.uri' depending on exact version,
+        // but docs example implies checking the object.
+        const mapData = chunk.maps;
+        const uri = mapData.uri || mapData.source?.uri;
+        
+        if (mapData.title && uri) {
+           locations.push({
+             title: mapData.title,
+             uri: uri,
+             address: mapData.address // sometimes available
+           });
+        }
+      }
+    }
+
+    return { text, locations };
+
+  } catch (error) {
+    console.error("Supplier Search Error:", error);
+    throw new Error("Could not search for suppliers. Please check internet connection.");
   }
 };

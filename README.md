@@ -1,44 +1,41 @@
-# Kubernetes Log Monitoring Script
+# CopperGuard AI 🛡️
 
-## How the Solution Works
+**Smart Scrap Grading & Supplier Discovery for Indian E-Waste Processors**
 
-To ensure the stability of the Kubernetes environment without impacting the performance of the live application logs, this solution utilizes a **snapshot-based monitoring approach**. 
+CopperGuard AI is a specialized web application designed for small-scale metal workshops and "garage-style" recyclers in India. It bridges the gap between informal scrap dealing and industrial-grade quality control using advanced AI, tailored specifically for low-budget operations.
 
-The script is scheduled to run every 5 minutes on the RHEL host server and executes the following logical flow:
+## 🚀 Key Features
 
-### 1. Snapshot Creation (Non-Blocking)
-Instead of reading the live Kubernetes log file directly—which could cause file locking issues or performance degradation—the script copies the current log contents to a secondary buffer file:
-`../kube_full.log`
+### 1. 🔍 AI Quality Scanner ("Expert Garage Mode")
+- **Instant Grading:** Analyzes photos of copper scrap to detect standard market grades (**Berry**, **Candy**, **Birch/Burnt**) and oxidation levels.
+- **Low-Cost Fixes:** Suggests accessible workshop remedies using household items like tamarind (*imli*), salt, and sawdust instead of expensive industrial chemicals.
+- **Safety First:** Provides localized safety warnings for handling acid or burnt materials.
+- **Powered by:** `gemini-3-flash-preview` (Multimodal Vision).
 
-*   **Benefit:** This isolates the heavy text processing from the active application runtime.
+### 2. 📍 Supplier Finder ("The Uber for Scrap")
+- **Local Discovery:** Finds nearby "kabadiwalas" (scrap dealers) and industrial scrap yards using real-time geolocation or city search.
+- **Maps Integration:** Provides direct navigation links to verified businesses via Google Maps.
+- **Contextual Advice:** AI explains *why* a specific dealer might be relevant for a small workshop.
+- **Powered by:** `gemini-2.5-flash` with **Google Maps Grounding**.
 
-### 2. Pattern Analysis & Context Extraction
-The script scans the buffered `../kube_full.log` for the specific keyword `"ERROR"`. If the phrase is found, it extracts a 3-line window for every occurrence:
-1.  The line **immediately preceding** the error.
-2.  The line **containing** the error.
-3.  The line **immediately following** the error.
+### 3. 📋 Digital Logbook
+- **Track Reliability:** Automatically logs every scan with the supplier's name and quality rating (1-10).
+- **History:** Helps owners decide which dealers provide clean *maal* (goods) vs. burnt/oxidized scrap to avoid future losses.
 
-### 3. Error Archival
-These extracted lines are appended to a persistent log file:
-`kube_error.log`
+## 🛠️ Technology Stack
+- **Frontend:** React 19, TypeScript, Vite
+- **Styling:** Tailwind CSS, Lucide Icons
+- **AI Core:** Google Gemini API (`@google/genai` SDK)
+    - **Vision:** `gemini-3-flash-preview`
+    - **Grounding:** `gemini-2.5-flash` + Google Maps Tool
 
-*   **Benefit:** This creates a concise, historical record of issues without the noise of successful operation logs.
+## 🎯 Target Audience
+- Small e-waste processors in India.
+- Metal workshop owners with limited budgets (~$10/month).
+- Users dealing with the informal recycling sector who need "B2B tools" without corporate complexity.
 
-### 4. Buffer Cleanup
-Once the analysis and extraction are complete, the contents of `../kube_full.log` are cleared.
-*   **Benefit:** This prevents duplicate processing of the same errors during the next 5-minute interval and manages disk space efficiently.
-
----
-
-### Workflow Visual
-```mermaid
-graph TD
-    A[Start: Cron Job (Every 5 mins)] -->|Copy| B[Live Kube Log -> ../kube_full.log]
-    B --> C{Scan for 'ERROR'}
-    C -- Found --> D[Extract: Previous Line + Error Line + Next Line]
-    D --> E[Append to kube_error.log]
-    C -- Not Found --> F[Proceed]
-    E --> G[Clear contents of ../kube_full.log]
-    F --> G
-    G --> H[End]
-```
+## 📱 How It Works
+1. **Capture:** Take a photo of the copper scrap batch.
+2. **Analyze:** The AI grades the metal and suggests cleaning methods.
+3. **Log:** The result is saved to track the supplier's quality over time.
+4. **Find:** Use the Supplier Finder tab to locate new sources of raw material nearby.

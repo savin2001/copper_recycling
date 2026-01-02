@@ -19,3 +19,14 @@ export interface AnalysisResult {
   rating: number;
   verdict: string;
 }
+
+export interface MapLocation {
+  title: string;
+  uri: string;
+  address?: string;
+}
+
+export interface SupplierSearchResult {
+  text: string;
+  locations: MapLocation[];
+}
