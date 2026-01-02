@@ -1,0 +1,7 @@
+{
+  "name": "CopperGuard AI",
+  "description": "Expert metallurgical consultant for small-scale Indian e-waste processors. Analyze copper quality, receive low-cost workshop fixes, and track supplier reliability.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
