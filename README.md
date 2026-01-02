@@ -1,4 +1,4 @@
-<img width="1894" height="2842" alt="high_grade_copper_scrap_test" src="https://github.com/user-attachments/assets/e8b179c2-d53c-4532-89e4-4badfe634d3e" /><img width="1778" height="2298" alt="low_grade_copper_scrap_test" src="https://github.com/user-attachments/assets/1859fd7c-b1a8-4796-a13a-1d6a27643f79" /><img width="1814" height="2842" alt="mixed_grade_copper_scrap_test" src="https://github.com/user-attachments/assets/cb72d9e9-2486-4785-89c3-1a97fbbdc048" /># CopperGuard AI 🛡️
+# CopperGuard AI 🛡️
 
 **Smart Scrap Grading & Supplier Discovery for Indian E-Waste Processors**
 
