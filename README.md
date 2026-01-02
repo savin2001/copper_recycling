@@ -1,4 +1,4 @@
-# CopperGuard AI 🛡️
+<img width="1894" height="2842" alt="high_grade_copper_scrap_test" src="https://github.com/user-attachments/assets/e8b179c2-d53c-4532-89e4-4badfe634d3e" /><img width="1778" height="2298" alt="low_grade_copper_scrap_test" src="https://github.com/user-attachments/assets/1859fd7c-b1a8-4796-a13a-1d6a27643f79" /><img width="1814" height="2842" alt="mixed_grade_copper_scrap_test" src="https://github.com/user-attachments/assets/cb72d9e9-2486-4785-89c3-1a97fbbdc048" /># CopperGuard AI 🛡️
 
 **Smart Scrap Grading & Supplier Discovery for Indian E-Waste Processors**
 
@@ -36,6 +36,20 @@ CopperGuard AI is a specialized web application designed for small-scale metal w
 
 ## 📱 How It Works
 1. **Capture:** Take a photo of the copper scrap batch.
+<img width="1778" height="2298" alt="copper_recycling_solution" src="https://github.com/user-attachments/assets/b0d382fd-1d1e-4944-95ca-71eea3a38232" />
+
 2. **Analyze:** The AI grades the metal and suggests cleaning methods.
+<img width="1778" height="2298" alt="copper_analysis_process" src="https://github.com/user-attachments/assets/0f58672e-bc55-4ce5-b428-3046dac2380f" />
+- Low grade
+<img width="1778" height="2298" alt="low_grade_copper_scrap_test" src="https://github.com/user-attachments/assets/8415afbf-558a-4bf5-ac9b-b862f49ded90" />
+- Mixed grade
+<img width="1814" height="2842" alt="mixed_grade_copper_scrap_test" src="https://github.com/user-attachments/assets/17692af6-b527-4c3d-9dca-9bfea0cecc9a" />
+- High grade
+<img width="1894" height="2842" alt="high_grade_copper_scrap_test" src="https://github.com/user-attachments/assets/f5d9c33b-6415-4887-911b-3650ce453499" />
+
 3. **Log:** The result is saved to track the supplier's quality over time.
+<img width="2578" height="2442" alt="copper_log_suppliers" src="https://github.com/user-attachments/assets/4c09edca-a969-448b-a687-01156055e3d0" />
+
 4. **Find:** Use the Supplier Finder tab to locate new sources of raw material nearby.
+<img width="1778" height="2298" alt="copper_supplier_solution" src="https://github.com/user-attachments/assets/b4d9176a-c232-47a0-a9e6-a580e1b4e55e" />
+
